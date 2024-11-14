@@ -314,32 +314,9 @@ class SerialSnooper:
                                         functionCodeMessage = 'Read Input Registers'
 
                                     # prohibit exception if first message is an answer
-                                    try:
-                                        highByteAnswer
-                                    except NameError:
-                                        highByteAnswer = False
-
-                                    # decode answer
-                                    if self.outputFormat == "hex":
-                                        data = " ".join(
-                                            ["{:02x}".format(x) for x in readData])
-                                    else:
-                                        if highByteAnswer:
-                                            if (readData[0]) in (0, 1):
-                                                data = " {} ({}, {})".format(
-                                                    bool(readData[0]), readData[0], readData[1])
-                                            else:
-                                                # data = int(readData[0], 16)
-                                                data = readData[0]
-                                        else:
-                                            data = int(
-                                                "".join(["{:02x}".format(x) for x in readData]), 16)
-                                    if translate:
-                                        log.info("Slave\t-> ID: {}, {}, Read byte count: {}, HighByteAnswer: {}, Answer: {}".format(
-                                            unitIdentifier, functionCodeMessage, readByteCount, highByteAnswer, data))
-                                    else:
-                                        log.info("Slave\t-> {} {} {} {} {}".format(
-                                            unitIdentifier, functionCodeMessage, readByteCount, highByteAnswer, readData))
+                                    data = int("".join(["{:02x}".format(x) for x in readData]), 16)
+                                    log.info("Slave\t-> {} {} ByteCount: {} Data: {}".format(
+                                            unitIdentifier, functionCodeMessage, readByteCount, data))
                                     modbusdata = modbusdata[bufferIndex:]
                                     bufferIndex = 0
                             else:
