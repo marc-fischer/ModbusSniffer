@@ -14,6 +14,7 @@ Documentation
 ```text
 Usage:  
   python modbus_sniffer.py [arguments]
+  modbus_sniffer.exe [arguments]
 
 Arguments:  
   -p, --port        select the serial port (Required)  
